@@ -1,18 +1,20 @@
 {
-    "name": "kaloyan/pdf-converter",
-    "description": "Convert PDF with unoconv",
-    "type": "project",
-    "license": "Unlicensed",
-    "authors": [
-        {
-            "name": "Kaloyan Arsov",
-            "email": "kaloyan.arsov@gmail.com"
-        }
-    ],
-    "require": {},
-    "autoload": {
-        "classmap": [
-            "src/"
-        ]
-    }
+	"name": "kaloyan/pdf-converter",
+	"description": "Convert PDF with unoconv",
+	"type": "project",
+	"license": "Unlicensed",
+	"authors": [
+		{
+			"name": "Kaloyan Arsov",
+			"email": "kaloyan.arsov@gmail.com"
+		}
+	],
+	"require": {
+		"setasign/fpdi-fpdf": "^2.0"
+	},
+	"autoload": {
+		"classmap": [
+			"src/"
+		]
+	}
 }
