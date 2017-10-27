@@ -1,0 +1,22 @@
+FROM php:7-apache
+LABEL Name=pdf-converter Version=0.0.1
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends \
+		libreoffice-writer \
+	&& pecl install xdebug-2.5.5 \
+	&& docker-php-ext-enable xdebug \
+	&& a2enmod rewrite ssl \
+	&& apt-get autoremove -y \
+	&& rm -r /var/lib/apt/lists/*
+
+COPY docker/php.ini /usr/local/etc/php/php.ini
+COPY docker/site.conf /etc/apache2/sites-available/000-default.conf
+
+# RUN mkdir -m 777 -p /srv/php-converter \
+# 	&& mkdir -m 777 -p /srv/php-converter/src \
+# 	&& mkdir -m 777 -p /srv/php-converter/vendor
+
+COPY ./.htaccess /srv/pdf-converter/
+COPY ./bootstrap.php /srv/pdf-converter/
+COPY src /srv/pdf-converter/src/
+COPY vendor /srv/pdf-converter/vendor/
