@@ -9,8 +9,8 @@ RUN apt-get update \
 	&& apt-get autoremove -y \
 	&& rm -r /var/lib/apt/lists/*
 
-COPY assets/php.ini /usr/local/etc/php/php.ini
-COPY assets/site.conf /etc/apache2/sites-available/000-default.conf
+COPY scripts/assets/php.ini /usr/local/etc/php/php.ini
+COPY scripts/assets/site.conf /etc/apache2/sites-available/000-default.conf
 
 COPY .htaccess /srv/pdf-converter/
 COPY bootstrap.php /srv/pdf-converter/
