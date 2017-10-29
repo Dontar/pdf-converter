@@ -16,3 +16,5 @@ COPY .htaccess /srv/pdf-converter/
 COPY bootstrap.php /srv/pdf-converter/
 COPY src /srv/pdf-converter/src/
 COPY vendor /srv/pdf-converter/vendor/
+
+EXPOSE 3000
