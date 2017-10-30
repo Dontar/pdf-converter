@@ -4,7 +4,7 @@ require_once "vendor/autoload.php";
 
 $router = new SimpleRouter();
 
-$router->on("/pdf", function($method, $params) {
+$router->on("/pdf", function($method, $params, $headers) {
 	$inputStream = fopen("php://input", "r");
 	$tmpStream = fopen($tmpFileName = tempnam(sys_get_temp_dir(), "tmp_word").".docx", "w");
 	$success = stream_copy_to_stream($inputStream, $tmpStream);
@@ -20,7 +20,7 @@ $router->on("/pdf", function($method, $params) {
 	unlink($tmpFileName);
 });
 
-$router->on("/merge/pdf", function($method, $params) {
+$router->on("/merge/pdf", function($method, $params, $headers) {
 	function transform($files) {
 		foreach ($files as $file) {
 			yield $files['tmp_file'];

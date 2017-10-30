@@ -3,7 +3,7 @@
 class Test {
 
 	function testConvertToPdf() {
-		$url = "http://160.44.207.102:3000/pdf";
+		$url = "http://localhost:3000/pdf";
 		// $url = "http://localhost:3000/pdf";
 		$streamContext = stream_context_create(array("http" => array(
 			"method" => "POST",
