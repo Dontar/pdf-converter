@@ -16,25 +16,37 @@ class PdfConverter {
 	 * @param boolean $out
 	 * @return string|void
 	 */
-	function convert($fileName) {
+	function convertFile($fileName) {
 		$tmpDir = sys_get_temp_dir();
 		$tmpFileName = $tmpDir."/".(new SplFileInfo($fileName))->getBasename(".docx").".pdf";
 
 		error_log(shell_exec($this->cmdLine[PHP_OS]." --headless --convert-to pdf --outdir $tmpDir $fileName"));
 
-		$f = new SplFileObject($tmpFileName);
-		while (!$f->eof()) {
-			echo $f->fread(8192);
+		return $tmpFileName;
+	}
+
+	function convertStream($stream) {
+		$f = fopen($fName = tempnam(sys_get_temp_dir(), "word_file").".docx");
+		$success = stream_copy_to_stream($stream, $f);
+		fclose($f);
+		if ($success !== false) {
+			$resultFile = $this->convertFile($fName);
+			stream_copy_to_stream($t = fopen($resultFile, "r"), $r = fopen("php://temp", "rw"));
+			fclose($t);
+			unlink($resultFile);
+			rewind($r);
+			return $r;
 		}
+		return null;
 	}
 
 	/**
 	 * Undocumented function
 	 *
-	 * @param array $files
+	 * @param Traversable $files
 	 * @return string|void
 	 */
-	function mergePdfs(array $files) {
+	function mergePdfs($files) {
 		$pdf = new Fpdi();
 		foreach ($files as $file) {
 			$pageCount = $pdf->setSourceFile($file);
@@ -44,6 +56,9 @@ class PdfConverter {
 				$pdf->useTemplate($tplidx);
 			}
 		}
-		$pdf->Output("I");
+		$f = fopen("php://temp", "rw");
+		fwrite($f, $pdf->Output("S"));
+		rewind($f);
+		return $f;
 	}
 }

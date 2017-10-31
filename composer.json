@@ -10,7 +10,8 @@
 		}
 	],
 	"require": {
-		"setasign/fpdi-fpdf": "^2.0"
+		"setasign/fpdi-fpdf": "^2.0",
+		"react/http": "^0.7.4"
 	},
 	"autoload": {
 		"classmap": [

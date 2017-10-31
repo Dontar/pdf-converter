@@ -40,16 +40,37 @@ class SimpleRouter {
 	}
 
 	function dispatch() {
+		$echoStream = function($data) {
+			if (is_string($data)) {
+				echo $data;
+				return true;
+			} else if (is_resource($data)) {
+				while(!feof($data)) {
+					echo fread($data, 8192);
+				}
+				fclose($data);
+				return true;
+			}
+			return false;
+		};
+
 		foreach ($this->callbacks as $value) {
 			list($route, $callback) = $value;
 			if (strpos($this->url['path'], $route) === 0) {
 				$params = isset($this->url['query'])?parse_str($this->url['query']):array();
 				$result = $callback($this->method, $params, $this->headers);
-				if (is_string($result)) {
-					echo $result;
+				if (!$echoStream($result)) {
+					if (is_array($result)) {
+						list($headers, $data) = array_values($result);
+						if (isset($headers)) {
+							foreach ($headers as $value) {
+								header($value);
+							}
+						}
+						$echoStream($data);
+					}
 				}
 			}
 		}
 	}
-
 }

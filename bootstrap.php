@@ -5,29 +5,23 @@ require_once "vendor/autoload.php";
 $router = new SimpleRouter();
 
 $router->on("/pdf", function($method, $params, $headers) {
-	$inputStream = fopen("php://input", "r");
-	$tmpStream = fopen($tmpFileName = tempnam(sys_get_temp_dir(), "tmp_word").".docx", "w");
-	$success = stream_copy_to_stream($inputStream, $tmpStream);
-	fclose($tmpStream);
-	if (false !== $success) {
-		$pdf = new PdfConverter();
-		header("Content-Type: application/pdf");
-		header("Content-Disposition: inline; filename=pdf_document.pdf");
-		header('Cache-Control: private, max-age=0, must-revalidate');
-		header('Pragma: public');
-		$pdf->convert($tmpFileName, true);
-	}
-	unlink($tmpFileName);
-});
-
-$router->on("/merge/pdf", function($method, $params, $headers) {
-	function transform($files) {
-		foreach ($files as $file) {
-			yield $files['tmp_file'];
-		}
-	}
 	$pdf = new PdfConverter();
-	$pdf->mergePdfs(transform($_FILES));
+	
+	$traverseFiles = function() use ($pdf) {
+		foreach ($_FILES as $value) {
+			yield $pdf->convertFile($value['tmp_name']);
+		}
+	};
+	$tmpStream = $pdf->mergePdfs($traverseFiles());
+	return array(
+		"headers" => array(
+			"Content-Type: application/pdf",
+			"Content-Disposition: inline; filename=pdf_document.pdf",
+			'Cache-Control: private, max-age=0, must-revalidate',
+			'Pragma: public'
+		),
+		"data" => $tmpStream
+	);
 });
 
 $router->dispatch();
