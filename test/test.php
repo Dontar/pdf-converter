@@ -73,16 +73,34 @@ class CurlWrapper {
 }
 stream_wrapper_unregister("http");
 stream_wrapper_register("http", "CurlWrapper", STREAM_IS_URL);
+
 class Test {
 
-	function testConvertToPdf() {
+	function testPdfMerge() {
+		// $url = "http://160.44.207.102:3000/pdf";
 		$url = "http://localhost:3000/pdf";
-		// $url = "http://localhost:3000/pdf";
 		$streamContext = stream_context_create(array("http" => array(
 			"method" => "POST",
 			"data" => array(
-				"file1" => new CURLFile(__DIR__."/h_agreement.docx")
+				"file1" => new CURLFile(__DIR__."/h_agreement.docx"),
+				"file2" => new CURLFile(__DIR__."/contract.docx")
 			)
+		)));
+		
+		$inStream = fopen($url, "r", null, $streamContext);
+		$outStream = fopen(__DIR__."/doc_multi.pdf", "w");
+		stream_copy_to_stream($inStream, $outStream);
+		fclose($outStream);
+		fclose($inStream);
+	}
+	
+	function testConvertToPdf() {
+		// $url = "http://160.44.207.102:3000/pdf";
+		$url = "http://localhost:3000/pdf";
+		$streamContext = stream_context_create(array("http" => array(
+			"method" => "POST",
+			"header" => array("Content-type: application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
+			"data" => file_get_contents(__DIR__."/h_agreement.docx")
 		)));
 		
 		$inStream = fopen($url, "r", null, $streamContext);
@@ -92,21 +110,9 @@ class Test {
 		fclose($inStream);
 	}
 
-	function testPdfMerge() {
-
-	}
-
-	function testForm() {
-		$pipi = array(
-			"var1" => "popo",
-			"var2" => fopen(__DIR__."/h_agreement.docx", "r")
-		);
-		// var_export(http_)
-	}
-
 }
 
 $test = new Test();
 
+$test->testPdfMerge();
 $test->testConvertToPdf();
-

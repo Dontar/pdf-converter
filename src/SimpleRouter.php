@@ -36,6 +36,9 @@ class SimpleRouter {
 			$header = str_replace(' ', '-', ucwords(str_replace('_', ' ', strtolower(substr($key, 5)))));
 			$headers[$header] = $value;
 		}
+		if (isset($_SERVER['CONTENT_TYPE'])) {
+			$headers["Content-Type"] = $_SERVER['CONTENT_TYPE'];
+		}
 		return $headers;
 	}
 

@@ -26,7 +26,7 @@ class PdfConverter {
 	}
 
 	function convertStream($stream) {
-		$f = fopen($fName = tempnam(sys_get_temp_dir(), "word_file").".docx");
+		$f = fopen($fName = tempnam(sys_get_temp_dir(), "word_file").".docx", "w");
 		$success = stream_copy_to_stream($stream, $f);
 		fclose($f);
 		if ($success !== false) {
