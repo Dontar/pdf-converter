@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a2863e5de8134018110ec4fd8e835a27",
+    "content-hash": "67fe4a184663300fa73a6d6a06111c8d",
     "packages": [
         {
             "name": "evenement/evenement",
@@ -223,22 +223,23 @@
         },
         {
             "name": "react/http",
-            "version": "v0.7.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/http.git",
-                "reference": "6646135c01097b5316d2cb47bc12e541bf26efae"
+                "reference": "801e8e5357210bcda5a1600dcf852860ccdc8886"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/http/zipball/6646135c01097b5316d2cb47bc12e541bf26efae",
-                "reference": "6646135c01097b5316d2cb47bc12e541bf26efae",
+                "url": "https://api.github.com/repos/reactphp/http/zipball/801e8e5357210bcda5a1600dcf852860ccdc8886",
+                "reference": "801e8e5357210bcda5a1600dcf852860ccdc8886",
                 "shasum": ""
             },
             "require": {
                 "evenement/evenement": "^3.0 || ^2.0 || ^1.0",
                 "php": ">=5.3.0",
                 "react/promise": "^2.3 || ^1.2.1",
+                "react/promise-stream": "^0.1.1",
                 "react/socket": "^1.0 || ^0.8 || ^0.7 || ^0.6 || ^0.5",
                 "react/stream": "^1.0 || ^0.7 || ^0.6 || ^0.5 || ^0.4.6",
                 "ringcentral/psr7": "^1.2"
@@ -246,7 +247,6 @@
             "require-dev": {
                 "clue/block-react": "^1.1",
                 "phpunit/phpunit": "^4.8.10||^5.0",
-                "react/promise-stream": "^0.1.1",
                 "react/socket": "^1.0 || ^0.8 || ^0.7"
             },
             "type": "library",
@@ -268,7 +268,7 @@
                 "server",
                 "streaming"
             ],
-            "time": "2017-08-16T15:24:39+00:00"
+            "time": "2017-10-24T16:38:01+00:00"
         },
         {
             "name": "react/promise",
@@ -315,6 +315,62 @@
                 "promises"
             ],
             "time": "2017-03-25T12:08:31+00:00"
+        },
+        {
+            "name": "react/promise-stream",
+            "version": "v0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp/promise-stream.git",
+                "reference": "f4123898734cfa532099efceaf91d5592e5afe74"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp/promise-stream/zipball/f4123898734cfa532099efceaf91d5592e5afe74",
+                "reference": "f4123898734cfa532099efceaf91d5592e5afe74",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3",
+                "react/promise": "^2.1 || ^1.2",
+                "react/stream": "^1.0 || ^0.7 || ^0.6 || ^0.5 || ^0.4 || ^0.3"
+            },
+            "require-dev": {
+                "clue/block-react": "^1.0",
+                "phpunit/phpunit": "^4.8",
+                "react/event-loop": "^1.0 || ^0.5 || ^0.4 || ^0.3",
+                "react/promise-timer": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "React\\Promise\\Stream\\": "src/"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Lück",
+                    "email": "christian@lueck.tv"
+                }
+            ],
+            "description": "The missing link between Promise-land and Stream-land for React PHP",
+            "homepage": "https://github.com/reactphp/promise-stream",
+            "keywords": [
+                "Buffer",
+                "async",
+                "promise",
+                "reactphp",
+                "stream",
+                "unwrap"
+            ],
+            "time": "2017-10-18T15:23:47+00:00"
         },
         {
             "name": "react/promise-timer",
@@ -664,7 +720,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "react/http": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
