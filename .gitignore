@@ -1,8 +1,10 @@
 
 \.vscode/
 
-*.pdf
+dist/
 
-vendor/
+node_modules/
 
 \.directory
+
+test/pdfs/
